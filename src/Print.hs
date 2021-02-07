@@ -2,7 +2,7 @@ module Print (print, printKey) where
 
 import Prelude hiding (print)
 import Data.Array.Unboxed (UArray, bounds, (!))
-import Data.Text (Text, pack, unpack)
+import Data.Text.Lazy (Text, pack, unpack)
 import Numeric (showFFloat)
 import System.FilePath (replaceExtension)
 

@@ -5,7 +5,7 @@ import Control.Monad.State.Strict (State(), execState, get, put)
 import Data.List (foldl')
 import Data.Map (Map, empty, lookup, insert, alter)
 import Prelude hiding (init, lookup, lines, words, drop, length)
-import Data.Text (Text, init, pack, unpack, lines, words, isPrefixOf, drop, length)
+import Data.Text.Lazy (Text, init, pack, unpack, lines, words, isPrefixOf, drop, length, toStrict)
 import Data.Attoparsec.Text (parseOnly, double)
 
 import Types
@@ -100,7 +100,7 @@ sampleTime name h =
   else error $ "Parse.sampleTime: expected " ++ unpack name ++ " but got " ++ unpack h
 
 readDouble :: Text -> Double
-readDouble s = case parseOnly double s of
+readDouble s = case parseOnly double (toStrict s) of
   Right x -> x
   _ -> error $ "Parse.readDouble: no parse " ++ unpack s
 

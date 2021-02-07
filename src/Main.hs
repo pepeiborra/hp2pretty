@@ -3,8 +3,8 @@
 module Main (main) where
 
 import Prelude hiding (print, readFile)
-import Data.Text.IO (readFile, hPutStr, hPutStrLn)
-import qualified Data.Text as T
+import Data.Text.Lazy.IO (readFile, hPutStr, hPutStrLn)
+import qualified Data.Text.Lazy as T
 import Control.Monad (forM, forM_, when)
 import Data.List (foldl1', nub)
 import Data.Tuple (swap)
@@ -42,11 +42,10 @@ main = do
   when (null (files a)) exitSuccess
   labelss <- if not (uniformTime || uniformMemory)
     then forM (files a) $ \file -> do
-      input <- readFile file
-      let (header, totals) = total input
-          keeps = prune cmp (tracePercent a) (bound $ nBands a) totals
-          (times, vals) = bands header keeps input
-          ((sticks, vticks), (labels, coords)) = pretty header vals keeps
+      (header, totals) <- total <$> readFile file
+      let keeps = prune cmp (tracePercent a) (bound $ nBands a) totals
+      (times, vals) <- bands header keeps <$> readFile file
+      let ((sticks, vticks), (labels, coords)) = pretty header vals keeps
           outputs = print svg noTitle sepkey (patterned a) header sticks vticks labels times coords
       withFile (replaceExtension file "svg") WriteMode $ \h -> mapM_ (hPutStr h) outputs
       return $ (header, reverse labels)

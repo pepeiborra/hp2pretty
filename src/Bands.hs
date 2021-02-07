@@ -8,8 +8,8 @@ import Data.Array.ST (writeArray, readArray, newArray)
 import Data.Array.Unboxed (UArray)
 import Data.Map (Map, lookup, size)
 import Prelude hiding (lookup, lines, words, length)
-import Data.Text (Text, pack, unpack, lines, words, isPrefixOf, length)
-import qualified Data.Text as T
+import Data.Text.Lazy (Text, pack, unpack, lines, words, isPrefixOf, length, toStrict)
+import qualified Data.Text.Lazy as T
 import Data.Attoparsec.Text (parseOnly, double)
 
 import Types
@@ -47,7 +47,7 @@ sampleTime name h =
   else error $ "Parse.sampleTime: expected " ++ unpack name ++ " but got " ++ unpack h
 
 readDouble :: Text -> Double
-readDouble s = case parseOnly double s of
+readDouble s = case parseOnly double (toStrict s) of
   Right x -> x
   _ -> error $ "Parse.readDouble: no parse " ++ unpack s
 

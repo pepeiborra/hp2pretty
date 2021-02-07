@@ -1,6 +1,6 @@
 module Graphics where
 
-import Data.Text (Text, foldl')
+import Data.Text.Lazy (Text, foldl')
 import Data.Char (ord)
 import Data.Bits (shiftR)
 import Data.Int (Int32, Int64)

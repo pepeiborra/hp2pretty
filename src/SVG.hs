@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module SVG (svg, fillStyleName) where
 
-import Data.Text (Text, pack)
-import qualified Data.Text as T
+import Data.Text.Lazy (Text, pack)
+import qualified Data.Text.Lazy as T
 import Data.List (intersperse)
 import Data.Monoid ((<>), mconcat)
 import Numeric (showHex)

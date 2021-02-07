@@ -6,7 +6,7 @@ module Prune
   , cmpStdDev
   ) where
 
-import Data.Text (Text)
+import Data.Text.Lazy (Text)
 import Data.List (foldl', sortBy)
 import Data.Ord (comparing)
 import Data.Map.Strict (Map, toList, fromList)
