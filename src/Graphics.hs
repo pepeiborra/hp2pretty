@@ -1,9 +1,10 @@
 module Graphics where
 
-import Data.Text (Text, foldl')
+import Data.Text (Text)
 import Data.Char (ord)
 import Data.Bits (shiftR)
 import Data.Int (Int32, Int64)
+import qualified Data.Text as T
 
 type Point = (Double, Double)
 type Size = (Double, Double)
@@ -65,7 +66,7 @@ hsvToRGB h0 s0 v0 =
 -- base-4.3.1.0:Data.HashTable (c) The University of Glasgow 2003
 
 hashText :: Int32 -> Text -> Int32
-hashText magic = foldl' f golden
+hashText magic = T.foldl' f golden
   where f m c = fromIntegral (ord c) * magic + hashInt32 m
 
 hashInt32 :: Int32 -> Int32
